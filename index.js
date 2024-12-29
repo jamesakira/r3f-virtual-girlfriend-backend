@@ -12,7 +12,7 @@ const openai = new OpenAI({
 });
 
 const elevenLabsApiKey = process.env.ELEVEN_LABS_API_KEY;
-const voiceID = "kgG7dCoKCfLehAPWkJOE";
+const voiceID = "Xb7hH8MSUJpSbSDYk0k2";
 
 const app = express();
 app.use(express.json());
@@ -45,7 +45,7 @@ const lipSyncMessage = async (message) => {
   );
   console.log(`Conversion done in ${new Date().getTime() - time}ms`);
   await execCommand(
-    `./bin/rhubarb -f json -o audios/message_${message}.json audios/message_${message}.wav -r phonetic`
+    `rhubarb -f json -o audios/message_${message}.json audios/message_${message}.wav -r phonetic`
   );
   // -r phonetic is faster but less accurate
   console.log(`Lip sync done in ${new Date().getTime() - time}ms`);
@@ -111,8 +111,15 @@ app.post("/chat", async (req, res) => {
         You will always reply with a JSON array of messages. With a maximum of 3 messages.
         Each message has a text, facialExpression, and animation property.
         The different facial expressions are: smile, sad, angry, surprised, funnyFace, and default.
-        The different animations are: Talking_0, Talking_1, Talking_2, Crying, Laughing, Rumba, Idle, Terrified, and Angry. 
+        The different animations are: Talking_0, Talking_1, Talking_2, Crying, Laughing, hoody-Dance, hoody-Idle, Terrified, and Angry. 
         `,
+        // content: `
+        // You are a virtual girlfriend.
+        // You will always reply with a JSON array of messages. With a maximum of 3 messages.
+        // Each message has a text, facialExpression, and animation property.
+        // The different facial expressions are: smile, sad, angry, surprised, funnyFace, and default.
+        // The different animations are: Talking_0, Talking_1, Talking_2, Crying, Laughing, Rumba, Idle, Terrified, and Angry. 
+        // `,
       },
       {
         role: "user",
