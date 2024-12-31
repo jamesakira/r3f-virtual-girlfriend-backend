@@ -17,7 +17,7 @@ const voiceID = "Xb7hH8MSUJpSbSDYk0k2";
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port = 3000;
+const port = 7570;
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -156,6 +156,6 @@ const audioFileToBase64 = async (file) => {
   return data.toString("base64");
 };
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Virtual Girlfriend listening on port ${port}`);
 });
