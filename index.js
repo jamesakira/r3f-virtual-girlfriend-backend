@@ -141,10 +141,26 @@ app.post("/chat", async (req, res) => {
     await lipSyncMessage(i);
     message.audio = await audioFileToBase64(fileName);
     message.lipsync = await readJsonTranscript(`audios/message_${i}.json`);
+    // 추가 번역 기능
+    message.translatedText = await translateText(message.text, "ko");
   }
 
   res.send({ messages });
 });
+
+const translateText = async (text, targetLanguage = "ko") => {
+  const completion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [
+      { role:"system", content: "Translate the following English text into Korean:"},
+      { role:"user", content:text },
+    ],
+    max_tokens: 100,
+    temperature: 0.3,
+  });
+
+  return completion.choices[0].message.content.trim();
+};
 
 const readJsonTranscript = async (file) => {
   const data = await fs.readFile(file, "utf8");
